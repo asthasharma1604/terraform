@@ -74,17 +74,25 @@ jobs:
           output_file_path: checkov.json
           soft_fail: true
 
-      - name: Terraform Plan
-        working-directory: terraform
-        run: terraform plan -out=tfplan
+      # - name: Terraform Plan
+      #   working-directory: terraform
+      #   run: terraform plan -out=tfplan
 
-      - name: Terraform Plan JSON
-        working-directory: terraform
-        run: terraform show -json tfplan > tfplan.json
+      # - name: Terraform Plan JSON
+      #   working-directory: terraform
+      #   run: terraform show -json tfplan > tfplan.json
 
-      - name: Check Terraform Plan
-        working-directory: terraform
-        run: |
-          echo "Terraform plan generated:"
-          ls -lh tfplan
-          ls -lh tfplan.json
+      # - name: Check Terraform Plan
+      #   working-directory: terraform
+      #   run: |
+      #     echo "Terraform plan generated:"
+      #     ls -lh tfplan
+      #     ls -lh tfplan.json
+      
+      - name: Run AI Review Script
+        env:
+          # 1. Grab repo name from GitHub, save it as OS variable "REPO_NAME"
+          REPO_NAME: ${{ github.repository }}          
+          # 2. Grab PR number from GitHub, save it as OS variable "PR_NUMBER"
+          PR_NUMBER: ${{ github.event.pull_request.number }} 
+        run: python review.py
