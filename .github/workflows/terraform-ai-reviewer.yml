@@ -90,9 +90,4 @@ jobs:
       #     ls -lh tfplan.json
       
       - name: Run AI Review Script
-        env:
-          # 1. Grab repo name from GitHub, save it as OS variable "REPO_NAME"
-          REPO_NAME: ${{ github.repository }}          
-          # 2. Grab PR number from GitHub, save it as OS variable "PR_NUMBER"
-          PR_NUMBER: ${{ github.event.pull_request.number }} 
-        run: python review.py
+        uses: asthasharma1604/terraform-ai-reviewer-action@main
