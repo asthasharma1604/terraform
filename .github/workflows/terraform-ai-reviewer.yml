@@ -90,10 +90,8 @@ jobs:
       #     ls -lh tfplan.json
 
       - name: Run Generic AI Reviewer
-        uses: asthasharma1604/terraform-ai-reviewer-action@main
+        uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-        env:
-          # 2. Pass the automatic token and the PR number into the action
-          GITHUB_TOKEN: ${{ secrets.GHP_SECRET_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          github_token: ${{ secrets.GHP_SECRET_TOKEN }}
+          pr_number: ${{ github.event.pull_request.number }}
