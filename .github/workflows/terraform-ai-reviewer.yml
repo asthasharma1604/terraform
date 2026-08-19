@@ -78,9 +78,9 @@ jobs:
       #   working-directory: terraform
       #   run: terraform plan -out=tfplan
 
-      # - name: Terraform Plan JSON
-      #   working-directory: terraform
-      #   run: terraform show -json tfplan > tfplan.json
+      #- name: Terraform Plan JSON
+      #  working-directory: terraform
+      #  run: terraform show -json tfplan > tfplan.json 
 
       # - name: Check Terraform Plan
       #   working-directory: terraform
