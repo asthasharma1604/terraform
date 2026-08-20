@@ -4,5 +4,5 @@ terraform {
 
 resource "local_file" "example" {
   filename = "${path.module}/example.txt"
-  content  = "Hello from Terraform"
+  content  = "Hello! from Terraform"
 }
