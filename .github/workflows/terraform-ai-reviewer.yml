@@ -89,7 +89,7 @@ jobs:
       #     ls -lh tfplan
       #     ls -lh tfplan.json
 
-      - name: Run Generic AI Reviewer
+      - name: Run Generic AI Code Reviewer
         uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
