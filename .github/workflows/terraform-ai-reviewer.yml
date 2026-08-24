@@ -89,9 +89,13 @@ jobs:
       #     ls -lh tfplan
       #     ls -lh tfplan.json
 
+      - name: Terraform Plan
+        run: terraform plan -no-color > tf_plan_output.txt
+
       - name: Run Generic AI Code Reviewer
         uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_token: ${{ secrets.GHP_SECRET_TOKEN }}
           pr_number: ${{ github.event.pull_request.number }}
+          plan_path: tf_plan_output.txt
