@@ -99,5 +99,4 @@ jobs:
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_token: ${{ secrets.GHP_SECRET_TOKEN }}
-          pr_number: ${{ github.event.pull_request.number }}
           plan_path: terraform/tf_plan_output.txt
