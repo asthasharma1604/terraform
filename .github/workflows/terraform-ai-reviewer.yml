@@ -70,7 +70,7 @@ jobs:
         with:
           directory: terraform
           framework: terraform
-          output_format: json
+          x: json
           output_file_path: checkov.json
           soft_fail: true
 
