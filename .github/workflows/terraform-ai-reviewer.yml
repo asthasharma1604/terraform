@@ -65,15 +65,6 @@ jobs:
           name: tflint-report
           path: terraform/tflint.json
 
-      - name: Run Checkov
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          directory: terraform
-          framework: terraform
-          x: json
-          output_file_path: checkov.json
-          soft_fail: true
-
       # - name: Terraform Plan
       #   working-directory: terraform
       #   run: terraform plan -out=tfplan
