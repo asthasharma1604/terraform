@@ -29,14 +29,14 @@ jobs:
           echo "Head branch: ${{ github.event.pull_request.head.ref }}"
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
 
       - name: Check Terraform installation
         run: |
           terraform version
 
       - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v5
+        uses: terraform-linters/setup-tflint@v6
 
       - name: TFLint version
         run: tflint --version
@@ -60,7 +60,7 @@ jobs:
           tflint --format json > tflint.json || true
 
       - name: Upload TFLint Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tflint-report
           path: terraform/tflint.json
@@ -85,8 +85,8 @@ jobs:
       #   run: terraform plan -no-color > tf_plan_output.txt
       
       - name: Run Generic AI Code Reviewer
-        #uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
-        uses: asthasharma-tenarai/terraform-ai-reviewer-action@features/reviewer-action
+        uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
+        #uses: asthasharma-tenarai/terraform-ai-reviewer-action@features/reviewer-action
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_token: ${{ secrets.GHP_SECRET_TOKEN }}
