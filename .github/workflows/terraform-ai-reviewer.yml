@@ -7,14 +7,45 @@ on:
       - synchronize
       - reopened
 
+  push:
+
   workflow_dispatch:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
+  check-open-pr:
+    name: Check for Open PR
+    runs-on: ubuntu-latest
+    outputs:
+      has-open-pr: ${{ steps.check.outputs.has-open-pr }}
+    steps:
+      - name: Check whether the branch has an open PR
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "has-open-pr=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          open_pr_count=$(gh api \
+            "repos/${GITHUB_REPOSITORY}/pulls?head=${GITHUB_REPOSITORY_OWNER}:${GITHUB_REF_NAME}&state=open" \
+            --jq 'length')
+
+          if [[ "$open_pr_count" -gt 0 ]]; then
+            echo "has-open-pr=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-open-pr=false" >> "$GITHUB_OUTPUT"
+          fi
+
   terraform-review:
     name: Terraform Review
+    needs: check-open-pr
+    if: github.event_name == 'pull_request' || needs.check-open-pr.outputs.has-open-pr != 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -85,8 +116,8 @@ jobs:
       #   run: terraform plan -no-color > tf_plan_output.txt
       
       - name: Run Generic AI Code Reviewer
-        uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
-        #uses: asthasharma-tenarai/terraform-ai-reviewer-action@features/reviewer-action
+        #uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
+        uses: asthasharma-tenarai/terraform-ai-reviewer-action@features/reviewer-action
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_token: ${{ secrets.GHP_SECRET_TOKEN }}
