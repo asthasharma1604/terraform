@@ -54,7 +54,7 @@ jobs:
 
       - name: Show changed files
         run: |
-          echo "Terraform AI Reviewer started"
+          echo "Terraform AI Rewer started"
           echo "PR: ${{ github.event.pull_request.number }}"
           echo "Base branch: ${{ github.event.pull_request.base.ref }}"
           echo "Head branch: ${{ github.event.pull_request.head.ref }}"
@@ -116,9 +116,9 @@ jobs:
       #   run: terraform plan -no-color > tf_plan_output.txt
       
       - name: Run Generic AI Code Reviewer
-        uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
-        #uses: asthasharma-tenarai/terraform-ai-reviewer-action@features/reviewer-action
+        #uses: asthasharma1604/terraform-ai-reviewer-action@terraform-ai-reviewer-action-branch1
+        uses: asthasharma-tenarai/terraform-ai-reviewer-action@features/reviewer-action
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-          github_token: ${{ secrets.GHP_SECRET_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           plan_path: terraform/tf_plan_output.txt
