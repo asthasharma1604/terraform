@@ -51,5 +51,5 @@ resource "aws_db_instance" "db" {
 }
 
 resource "aws_s3_bucket" "logs" {
-  bucket = "my-test-log-bucket-1234"
+  bucket = "buckets3-tenarai"
 }
