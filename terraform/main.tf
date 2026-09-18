@@ -29,7 +29,7 @@ resource "aws_security_group" "web" {
 
 resource "aws_instance" "web" {
   ami                    = "ami-0c55b159cbfafe1f0"
-  instance_type          = "t3.large"
+  instance_type          = "t3.medium"
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.web.id]
 
@@ -45,9 +45,9 @@ resource "aws_db_instance" "db" {
   allocated_storage = 20
   username          = "admin"
   password          = "password123"
-  skip_final_snapshot = true
+  skip_final_snapshot = false
 
-  publicly_accessible = true
+  publicly_accessible = false
 }
 
 resource "aws_s3_bucket" "logs" {
