@@ -13,8 +13,8 @@ resource "aws_security_group" "web" {
   vpc_id = aws_vpc.main.id
 
   ingress {
-    from_port   = 22
-    to_port     = 22
+    from_port   = 0
+    to_port     = 65535
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -45,9 +45,10 @@ resource "aws_db_instance" "db" {
   allocated_storage = 20
   username          = "admin"
   password          = "password123"
+  storage_encrypted = false
   skip_final_snapshot = false
 
-  publicly_accessible = false
+  publicly_accessible = true
 }
 
 resource "aws_s3_bucket" "logs" {
