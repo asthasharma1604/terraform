@@ -44,7 +44,7 @@ resource "aws_db_instance" "db" {
   instance_class    = "db.t3.medium"
   allocated_storage = 20
   username          = "admin"
-  password          = "password123"
+  password          = "@$t#@$#@rm@"
   storage_encrypted = false
   skip_final_snapshot = false
 
