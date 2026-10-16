@@ -43,7 +43,7 @@ resource "aws_db_instance" "db" {
   engine            = "postgres"
   instance_class    = "db.t3.medium"
   allocated_storage = 20
-  username          = "admin"
+  username          = "admin-asthas"
   password          = "@$t#@$#@rm@"
   storage_encrypted = false
   skip_final_snapshot = false
