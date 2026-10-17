@@ -1,0 +1,55 @@
+Terraform will perform the following actions:
+
+  # aws_db_instance.db must be replaced
+-/+ resource "aws_db_instance" "db" {
+      ~ allocated_storage       = 20 -> 100
+      ~ db_name                 = "appdb" -> "productiondb"
+      ~ engine_version          = "15.5" -> "16.4"
+      ~ instance_class          = "db.t3.medium" -> "db.r6g.2xlarge"
+      ~ multi_az                = false -> true
+      ~ publicly_accessible     = true -> false
+      ~ storage_type            = "gp2" -> "gp3"
+      ~ identifier              = "test-db" -> "production-db" # forces replacement
+      ...
+    }
+
+  # aws_instance.web will be updated in-place
+  ~ resource "aws_instance" "web" {
+      ~ instance_type = "t3.large" -> "m7i.4xlarge"
+      ...
+    }
+
+  # aws_security_group.web will be destroyed
+  - resource "aws_security_group" "web" {
+      name        = "web-sg"
+      description = "Web security group"
+      ...
+    }
+
+  # aws_security_group.web_new will be created
+  + resource "aws_security_group" "web_new" {
+      name        = "web-sg-new"
+      description = "Replacement security group"
+      ...
+    }
+
+  # aws_subnet.public must be replaced
+-/+ resource "aws_subnet" "public" {
+      ~ cidr_block = "10.0.1.0/24" -> "10.0.10.0/24"
+      ~ availability_zone = "us-east-2a" -> "us-east-2b"
+      ...
+    }
+
+  # aws_s3_bucket.logs will be destroyed
+  - resource "aws_s3_bucket" "logs" {
+      bucket = "terraform-test-logs"
+      ...
+    }
+
+  # aws_s3_bucket.logs_new will be created
+  + resource "aws_s3_bucket" "logs_new" {
+      bucket = "terraform-production-logs"
+      ...
+    }
+
+Plan: 3 to add, 1 to change, 3 to destroy.
